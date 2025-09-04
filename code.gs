@@ -433,6 +433,29 @@ function parsePgnTimezone(tags) {
   return '';
 }
 
+function extractPgnTags(pgn) {
+  const tags = {};
+  if (!pgn) return tags;
+  try {
+    // Only parse header section (before first blank line)
+    const headerEnd = pgn.indexOf('\n\n');
+    const headerText = headerEnd === -1 ? pgn : pgn.slice(0, headerEnd);
+    const re = /^\s*\[([A-Za-z0-9_]+)\s+"([^"]*)"\s*\]\s*$/gm;
+    let m;
+    while ((m = re.exec(headerText)) !== null) {
+      const key = m[1];
+      const val = m[2];
+      tags[key] = val;
+    }
+    // Normalize a few common aliases if present in non-standard casing
+    if (tags.ECOURL && !tags.ECOUrl) tags.ECOUrl = tags.ECOURL;
+    if (tags.Timezone && !tags.TimeZone) tags.TimeZone = tags.Timezone;
+  } catch (e) {
+    // Return best-effort tags on parse errors
+  }
+  return tags;
+}
+
 function computeOffsetHoursFromTz(date, tz) {
   try {
     const z = Utilities.formatDate(date, tz, 'Z'); // +0530 or -0700
