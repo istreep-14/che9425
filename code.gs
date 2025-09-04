@@ -461,7 +461,7 @@ function extractMovesFromPgn(pgn) {
   if (blankLineIndex === -1) return { moves: '', times: '', movesPerSide: '' };
   let movesText = pgn.slice(blankLineIndex + 2).trim();
   movesText = movesText.replace(/\s+(1-0|0-1|1\/2-1\/2|\*)\s*$/, '');
-  movesText = movesText.replace(/\([^)]]*\)/g, '');
+  movesText = movesText.replace(/\([^)]*\)/g, '');
   movesText = movesText.replace(/\$\d+/g, '');
 
   const movesMap = {};
