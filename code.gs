@@ -14,6 +14,10 @@ function onOpen() {
     .addItem('Setup Sheets', 'setupSheets')
     .addItem('Fetch Month from Config', 'fetchMonthFromConfig')
     .addToUi();
+  // Add headers/config/calculated menu
+  if (typeof AddHeaderConfigMenu === 'function') {
+    AddHeaderConfigMenu();
+  }
 }
 
 function setupSheets() {

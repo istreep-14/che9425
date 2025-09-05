@@ -6,7 +6,7 @@
 const HEADER_CONFIG = {
   rawConfigSheetName: 'Config - Raw Headers',
   calcConfigSheetName: 'Config - Calc Headers',
-  rawDataSheetName: 'Raw',
+  rawDataSheetName: 'Games Raw',
   calcDataSheetName: 'Calculated',
   propertiesKeyRaw: 'DEFAULT_HEADERS_RAW',
   propertiesKeyCalc: 'DEFAULT_HEADERS_CALC'
