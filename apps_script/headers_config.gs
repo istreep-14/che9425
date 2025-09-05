@@ -76,7 +76,5 @@ function AddHeaderConfigMenu() {
     .addToUi();
 }
 
-function onOpen() {
-  AddHeaderConfigMenu();
-}
+// onOpen is merged into the main menu in code.gs
 

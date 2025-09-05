@@ -86,8 +86,11 @@ function extractOpponentSummary_(stats) {
 function buildCalculatedFromRaw() {
   const username = getPrimaryUsername_();
   if (!username) throw new Error('Set your username with setPrimaryUsername("yourname") first.');
-  const raw = getSheetByNameOrThrow_(HEADER_CONFIG.rawDataSheetName);
-  const calc = getSheetByNameOrThrow_(HEADER_CONFIG.calcDataSheetName);
+  const ss = getSpreadsheet_();
+  const raw = ss.getSheetByName(HEADER_CONFIG.rawDataSheetName);
+  if (!raw) throw new Error('Missing sheet: ' + HEADER_CONFIG.rawDataSheetName);
+  let calc = ss.getSheetByName(HEADER_CONFIG.calcDataSheetName);
+  if (!calc) calc = ss.insertSheet(HEADER_CONFIG.calcDataSheetName);
 
   const rawHeaders = readHeaderRow_(raw);
   if (!rawHeaders.length) throw new Error('Raw sheet has no headers.');
