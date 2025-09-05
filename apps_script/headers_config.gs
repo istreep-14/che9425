@@ -70,6 +70,9 @@ function AddHeaderConfigMenu() {
     .addItem('Generate Calc Header Config', 'GenerateCalcHeadersConfig')
     .addItem('Apply Calc Header Config', 'ApplyCalcHeadersConfig')
     .addItem('Save Calc Defaults', 'SaveCalcHeadersDefaults')
+    .addSeparator()
+    .addItem('Generate Calculated Formulas Sheet', 'GenerateCalculatedDataFormulas')
+    .addItem('Interactive: Add Calculated Header (AI)', 'InteractiveAddCalculatedHeaderWithAI')
     .addToUi();
 }
 
