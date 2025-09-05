@@ -9,8 +9,29 @@ const CALC_SETTINGS = {
 };
 
 function setPrimaryUsername(username) {
-  if (!username) throw new Error('Username required');
-  PropertiesService.getDocumentProperties().setProperty(CALC_SETTINGS.userPropertyKey, String(username));
+  let name = String(username || '').trim();
+  if (!name) {
+    try {
+      const ss = getSpreadsheet_();
+      const cfgName = (typeof SHEET_NAMES === 'object' && SHEET_NAMES.CONFIG) ? SHEET_NAMES.CONFIG : 'Config';
+      const configSheet = ss.getSheetByName(cfgName);
+      if (configSheet && typeof readConfig === 'function') {
+        const cfg = readConfig(configSheet);
+        const fromConfig = String((cfg && cfg.username) || '').trim();
+        if (fromConfig) name = fromConfig;
+      }
+    } catch (e) {}
+  }
+  if (!name) {
+    try {
+      const email = Session.getActiveUser && Session.getActiveUser();
+      const addr = email && typeof email.getEmail === 'function' ? email.getEmail() : '';
+      const local = addr ? String(addr).split('@')[0] : '';
+      if (local) name = local;
+    } catch (e) {}
+  }
+  if (!name) throw new Error('Username required. Pass setPrimaryUsername("yourname") or set Config → username.');
+  PropertiesService.getDocumentProperties().setProperty(CALC_SETTINGS.userPropertyKey, String(name));
 }
 
 function getPrimaryUsername_() {
